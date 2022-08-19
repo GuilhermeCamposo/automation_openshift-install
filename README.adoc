@@ -1,0 +1,36 @@
+= OpenShift Installation Playbook
+
+
+== Ansible Automation
+
+* https://www.ansible.com/[Ansible 3]
+- https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#control-node-requirements[Ansible's requirement]
+* https://pypi.org/project/kubernetes/[Python's Kubernetes module]
+
+
+== Parameters
+
+[options="header"]
+|=======================
+| Parameter             | Definition
+| aws_access_key_id     | AWS Key ID
+| aws_secret_access_key | AWS Key Secret
+| aws_region            | AWS region, such as `us-east-2`
+| ocp4_base_domain      | Base domain created on Route 53
+| cluster_name          | A name for your cluster, such as `amq-cluster`
+| ansible_user          | OS user used to run this automation. It needs to be a sudoer
+|=======================
+
+== How to run
+
+. First load your installation pull-secret as an environment variable
+----
+pull_secret=$(cat pull-secret.txt)
+----
+
+. Run the playbook with all parametes. Don't forget to use `-k` as the root password will be needed for privileged tasks.
+
+----
+ansible-playbook playbook.yml -k -e ocp4_pull_secret=${pull_secret} -e aws_access_key_id=${aws_access_key_id} -e aws_secret_access_key=${aws_secret_access_key}  \
+-e aws_region=${aws_region} -e ocp4_base_domain=${ocp4_base_domain} -e cluster_name=${cluster_name} -e ansible_user=${ansible_user}
+----

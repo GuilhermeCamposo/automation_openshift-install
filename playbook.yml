@@ -1,0 +1,21 @@
+- hosts: localhost
+  name: Provision Benchmark Environment
+  vars:
+    ocp4_installer_version: '4.10'
+  tasks:
+  - name: Include AWS Role
+    include_role:
+      name: aws
+
+  - name: Include OpenShift Role
+    include_role:
+      name: openshift
+
+  - name: Provisioning Finished
+    debug:
+      msg:
+        - Provisioning finished succesfully.
+        - 'OpenShift API: {{ openshift_console_api }} '
+        - 'OpenShift Console: {{ openshift_console_url }} '
+        - 'User: kubeadmin '
+        - 'Password: {{ r_kubeadmin_password.stdout }} '

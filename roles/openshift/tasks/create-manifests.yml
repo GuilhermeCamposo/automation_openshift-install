@@ -1,0 +1,7 @@
+- name: Run openshift-install create manifests
+  become: false
+  command: openshift-install create manifests --dir=/home/{{ ansible_user }}/{{ cluster_name }}
+
+- name: Run openshift-install create ignition-configs
+  become: false
+  command: openshift-install create ignition-configs --dir=/home/{{ ansible_user }}/{{ cluster_name }}
